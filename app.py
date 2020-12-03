@@ -31,15 +31,17 @@ class App:
         # fm = tk.Frame(master)
 
         #video control buttons
-        
-        self.img1=tk.PhotoImage(file="stop.png")
-        self.btn_stop=tk.Button(self.window, image=self.img1, padx=3, pady=2,activebackground='#979797', command=self.close_camera)
-        self.btn_stop["border"]="0"
-        self.btn_stop.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
+    
         self.img=tk.PhotoImage(file="start.png")
         self.btn_start=tk.Button(self.window, image=self.img,padx=3,pady=2, activebackground='#979797', command=self.open_camera)
         self.btn_start["border"]="0"
         self.btn_start.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
+
+        self.img1=tk.PhotoImage(file="stop.png")
+        self.btn_stop=tk.Button(self.window, image=self.img1, padx=3, pady=2,activebackground='#979797', command=self.close_camera)
+        self.btn_stop["border"]="0"
+        self.btn_stop.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
+
 
         # Button that lets the user take a snapshot
         self.img2=tk.PhotoImage(file="snap.png")
