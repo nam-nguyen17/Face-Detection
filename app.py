@@ -32,25 +32,25 @@ class App:
 
         #video control buttons
     
-        self.img=tk.PhotoImage(file="start.png")
+        self.img=tk.PhotoImage(file=r"icon/start.png")
         self.btn_start=tk.Button(self.window, image=self.img,padx=3,pady=2, activebackground='#979797', command=self.open_camera)
         self.btn_start["border"]="0"
         self.btn_start.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
 
-        self.img1=tk.PhotoImage(file="stop.png")
+        self.img1=tk.PhotoImage(file=r"icon/stop.png")
         self.btn_stop=tk.Button(self.window, image=self.img1, padx=3, pady=2,activebackground='#979797', command=self.close_camera)
         self.btn_stop["border"]="0"
         self.btn_stop.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
 
 
         # Button that lets the user take a snapshot
-        self.img2=tk.PhotoImage(file="snap.png")
+        self.img2=tk.PhotoImage(file=r"icon/snap.png")
         self.btn_snapshot=tk.Button(self.window,image=self.img2,padx=3,pady=2, activebackground='#979797', command=lambda:[self.snapshot(), self.play_music()])
         self.btn_snapshot["border"]="0"
         self.btn_snapshot.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
 
         # quit button
-        self.img3=tk.PhotoImage(file="exit.png")
+        self.img3=tk.PhotoImage(file=r"icon/exit.png")
         self.btn_quit=tk.Button(self.window, text='QUIT',image=self.img3,padx=3, pady=2,activebackground='#979797', command=self.quit)
         self.btn_quit["border"]="0"
         self.btn_quit.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
