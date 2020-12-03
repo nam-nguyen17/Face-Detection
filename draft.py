@@ -1,19 +1,12 @@
-import datetime as dt
-import time
+from tkinter import *
+import pygame
 
-elapsedTime = dt.datetime(1,1,1)
-print("toàn số 0------", elapsedTime)
 
-PC = dt.datetime(1,1,1).now()
-print("PC----", PC)
+pygame.mixer.init()
+def play_music():
+    pygame.mixer.music.load("sample.mp3")
+    pygame.mixer.music.play()
 
-t = time.localtime()
-Zeros = dt.timedelta(hours=t[3], minutes=t[4], seconds=t[5])
-print("zero time------", Zeros)
-
-# zeroTime = PC - elapsedTime
-# print("abc-----", zeroTime)
-
-elapsedtime = PC - Zeros
-print("-----", elapsedtime)
-
+root = Tk()
+Button(root, text="Play music", command=play_music).pack()
+root.mainloop()

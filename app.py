@@ -1,24 +1,23 @@
 import tkinter as tk
-# import tkinter.
 from cv2 import cv2
 import PIL.Image, PIL.ImageTk
 import time
-import datetime as dt
-import argparse
+import pygame
 from videocapture import VideoCapture
-from stopwatch import StopWatch
+from stopwatch import ElapsedTimeClock
+
 
 
 class App:
-    def __init__(self, window, window_title, video_source=0, master=None):
+    def __init__(self, window, window_title, video_source=0):
         self.window = window
         self.window.title(window_title)
         self.video_source = video_source
         self.ok=False
-        self.master = master
-
+        
+        # ---------------------------------------------------------------------------------- #
         #timer
-        self.timer=StopWatch(self.window)
+        self.timer=ElapsedTimeClock(self.window)
 
         # open video source (by default this will try to open the computer webcam)
         self.vid = VideoCapture(self.video_source)
@@ -27,8 +26,7 @@ class App:
         self.canvas = tk.Canvas(window, width = self.vid.width, height = self.vid.height)
         self.canvas.pack()
 
-        # --------------------------------------------------------------------------------
-        # fm = tk.Frame(master)
+        # ------------------------------------------------------------------------------------ #
 
         #video control buttons
         self.btn_start=tk.Button(self.window, text='START', font=("Arial", 12, "bold"), padx=10, command=self.open_camera)
@@ -39,7 +37,7 @@ class App:
 
 
         # Button that lets the user take a snapshot
-        self.btn_snapshot=tk.Button(self.window, text="Snapshot", font=("Arial", 12, "bold"), width=30, padx=50, command=self.snapshot)
+        self.btn_snapshot=tk.Button(self.window, text="Snapshot", font=("Arial", 12, "bold"), width=30, padx=50, command=lambda:[self.snapshot(), self.play_music()])
         self.btn_snapshot.pack(anchor=tk.CENTER, fill=tk.BOTH, expand=tk.YES)
 
         # quit button
@@ -52,25 +50,33 @@ class App:
         self.window.resizable(0, 0)
         self.window.mainloop()
 
+        # ---------------------------------------------------------------------------------- #
 
     def snapshot(self):
         # Get a frame from the video source
         ret,frame=self.vid.get_frame()
 
         if ret:
-            cv2.imwrite("IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
+            cv2.imwrite("image/IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
+
+    pygame.mixer.init()
+    def play_music(self):
+        pygame.mixer.music.load("sample.mp3")
+        pygame.mixer.music.play()
+
+            
 
     def open_camera(self):
         self.ok = True
         self.timer.start()
-        print("camera opened => Recording")
+        print("Camera opened => Recording")
 
 
 
     def close_camera(self):
         self.ok = False
         self.timer.stop()
-        print("camera closed => Not Recording")
+        print("Camera closed => Not Recording")
 
        
     def update(self):
@@ -83,6 +89,8 @@ class App:
             self.canvas.create_image(0,0, image=self.photo, anchor=tk.NW)
 
             self.window.after(self.delay,self.update)
+
+        # ---------------------------------------------------------------------------------- #
 
 def main():
     # Create a window and pass it to the Application object

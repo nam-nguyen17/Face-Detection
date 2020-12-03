@@ -1,16 +1,14 @@
-import tkinter as tk
 import time
 import datetime as dt
+import tkinter as tk
 
-class StopWatch:
+class ElapsedTimeClock:
     def __init__(self,window):
         self.T=tk.Label(window,text='00:00:00',font=('times', 20, 'bold'), bg='green')
         self.T.pack(fill=tk.BOTH, expand=1)
         self.elapsedTime=dt.datetime(1,1,1)
-        self.running=False
+        self.running=0
         self.lastTime=''
-        
-        # get the current time from the PC without year-month-day
         t = time.localtime()
         self.zeroTime = dt.timedelta(hours=t[3], minutes=t[4], seconds=t[5])
         # self.tick()
@@ -18,7 +16,7 @@ class StopWatch:
  
     def tick(self):
         # get the current local time from the PC
-        self.now = dt.datetime(1,1,1).now()
+        self.now = dt.datetime(1, 1, 1).now()
         self.elapsedTime = self.now - self.zeroTime
         self.time2 = self.elapsedTime.strftime('%H:%M:%S')
         # if time string has changed, update it
@@ -35,9 +33,11 @@ class StopWatch:
             if not self.running:
                 self.zeroTime=dt.datetime(1, 1, 1).now()-self.elapsedTime
                 self.tick()
-                self.running=True
+                self.running=1
 
     def stop(self):
             if self.running:
                 self.T.after_cancel(self.updwin)
-                self.running=False
+                self.elapsedTime=dt.datetime(1, 1, 1).now()-self.zeroTime
+                self.time2=self.elapsedTime
+                self.running=0
