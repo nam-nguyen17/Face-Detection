@@ -33,7 +33,7 @@ class App:
         #video control buttons
     
         self.img=tk.PhotoImage(file=r"icon/start.png")
-        self.btn_start=tk.Button(self.window, image=self.img,padx=3,pady=2, activebackground='#979797', command=self.open_camera)
+        self.btn_start=tk.Button(self.window, image=self.img,padx=3,pady=2, activebackground='#979797', command=lambda:[self.open_camera(), self.startsound()])
         self.btn_start["border"]="0"
         self.btn_start.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
 
@@ -73,6 +73,10 @@ class App:
     def play_music(self):
         pygame.mixer.music.load("sample.mp3")
         pygame.mixer.music.play()
+    pygame.mixer.init()
+    def startsound(self):
+         pygame.mixer.music.load("startsound.mp3")
+         pygame.mixer.music.play()
 
     def open_camera(self):
         self.ok = True
