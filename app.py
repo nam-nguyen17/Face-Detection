@@ -11,12 +11,14 @@ from timer import ElapsedTimeClock
 
 
 class App:
-    def __init__(self, window, window_title, video_source=0, master=None):
+    def __init__(self, window, window_title, video_source=0):
         self.window = window
         self.window.title(window_title)
         self.video_source = video_source
         self.ok=False
-        self.master = master
+        self.face_cascade=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+        self.detect= False
+
 
         #timer
         self.timer=ElapsedTimeClock(self.window)
@@ -56,7 +58,7 @@ class App:
         self.btn_quit["border"]="0"
         self.btn_quit.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
 
-        self.btn_detec=tk.Button(self.window, text='Detection', padx=3, pady=2, command=lambda: [self.detection() or self.quit()])
+        self.btn_detec=tk.Button(self.window, text='Detection', padx=3, pady=2,command=self.face_detect)
         self.btn_detec.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
 
         # After it is called once, the update method will be automatically called every delay milliseconds
@@ -109,7 +111,18 @@ class App:
         ret, frame=self.vid.get_frame()
 
         if ret:
-            self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
+            
+            if self.detect:
+                
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                faces = self.face_cascade.detectMultiScale(gray, 1.1, 4)
+            
+                for (x, y, w, h) in faces:
+                    cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)   
+                    
+            self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))    
+                
+
             self.canvas.create_image(0,0, image=self.photo, anchor=tk.NW)
         
             self.window.after(self.delay,self.update)
@@ -117,24 +130,28 @@ class App:
     def quit(self):
         self.window.destroy()
 
-    def detection(self):
-        face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-        cap = cv2.VideoCapture(0 + cv2.CAP_DSHOW)
-        while True:
-            _, img = cap.read()
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-            for (x, y, w, h) in faces:
-                cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
-            cv2.imshow('Detect', img)
-            k = cv2.waitKey(30) & 0xff
-            if k==27:   # esc button in the keyboard
-                break
 
-            if k==32:   # space button in the keyboard
-                return self.update
+    def face_detect(self):
+       self.detect= not self.detect
+    # def detection(self):
+    #     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    #     cap = cv2.VideoCapture(0)
+    #     while True:
+    #         ret, img = cap.read()
+    #         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    #         faces = face_cascade.detectMultiScale(gray, 1.1, 4)
             
-        cap.release()
+    #         for (x, y, w, h) in faces:
+    #             cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)    
+    #         cv2.imshow('Detect', img)
+    #         k = cv2.waitKey(30) & 0xff
+    #         if k==27:   # esc button in the keyboard
+    #             break
+
+    #         if k==32:   # space button in the keyboard
+    #             return App(tk.Tk(),'Video Recorder')
+            
+    #     cap.release()
 
         
 
