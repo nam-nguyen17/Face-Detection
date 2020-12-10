@@ -73,7 +73,7 @@ class App:
         ret,frame=self.vid.get_frame()
 
         if ret:
-            cv2.imwrite("image/IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
+            cv2.imwrite("snapshot/IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
 
     # create sound effect for button 
     pygame.mixer.init()
