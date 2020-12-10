@@ -16,7 +16,7 @@ class App:
         self.window.title(window_title)
         self.video_source = video_source
         self.ok=False
-        self.face_cascade=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+        self.face_cascade=cv2.CascadeClassifier('haarcasde/haarcascade_frontalface_default.xml')
         self.detect= False
 
 
@@ -78,17 +78,17 @@ class App:
     # create sound effect for button 
     pygame.mixer.init()
     def play_music(self):
-        pygame.mixer.music.load("sample.mp3")
+        pygame.mixer.music.load("icon/snapshot.mp3")
         pygame.mixer.music.play()
     pygame.mixer.init()
 
     def startsound(self):
-         pygame.mixer.music.load("startsound.mp3")
+         pygame.mixer.music.load("icon/startsound.mp3")
          pygame.mixer.music.play()
     pygame.mixer.init()
 
     def stopsound(self):
-        pygame.mixer.music.load("stopsound.mp3")
+        pygame.mixer.music.load("icon/stopsound.mp3")
         pygame.mixer.music.play()
     
 
@@ -152,10 +152,6 @@ class App:
     #             return App(tk.Tk(),'Video Recorder')
             
     #     cap.release()
-
-        
-
-
 
 
 
