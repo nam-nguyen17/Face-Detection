@@ -61,6 +61,7 @@ def classify_face(im):
         # use the known face with the smallest distance to the new face
         face_distances = face_recognition.face_distance(faces_encoded, face_encoding)
         best_match_index = np.argmin(face_distances)
+        print(matches)
         if matches[best_match_index]:
             name = known_face_names[best_match_index]
 
@@ -84,4 +85,4 @@ def classify_face(im):
     return face_names 
 
 
-print(classify_face("test.jpg"))
+print(classify_face("IMG-13-12-2020-20-44-23.jpg"))
