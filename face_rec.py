@@ -34,7 +34,7 @@ def unknown_image_encoded(img):
     return encoding
 
 
-def classify_face(im):
+def classify_face(img):
     """
     will find all of the faces in a given image and label
     them if it knows what they are
@@ -45,7 +45,6 @@ def classify_face(im):
     faces_encoded = list(faces.values())
     known_face_names = list(faces.keys())
 
-    img = cv2.imread(im, 1)
     #img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
     #img = img[:,:,::-1]
  
@@ -85,4 +84,4 @@ def classify_face(im):
     return face_names 
 
 
-print(classify_face("IMG-13-12-2020-20-44-23.jpg"))
+# print(classify_face("IMG-13-12-2020-20-35-48.jpg"))
