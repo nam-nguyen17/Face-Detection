@@ -5,7 +5,7 @@ import numpy as np
 
 
 class VideoCapture:  
-    def __init__(self, video_source=0 + cv2.CAP_DSHOW):
+    def __init__(self, video_source=0):
         
         # Open the video source
         self.faceCascade= cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
