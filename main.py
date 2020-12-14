@@ -9,6 +9,7 @@ from videocapture import VideoCapture
 from timer import ElapsedTimeClock
 from face_rec import get_encoded_faces, unknown_image_encoded, classify_face
 
+
 class App:
     def __init__(self, window, window_title, video_source=0):
         self.window = window
@@ -64,8 +65,8 @@ class App:
                                     command=self.face_detect)
         self.btn_detec.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
 
-        # self.btn_detec=tk.Button(self.window, text='Recognition', padx=3, pady=2, command=self.recognize)
-        # self.btn_detec.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
+        self.btn_detec=tk.Button(self.window, text='Recognition', padx=3, pady=2, command=self.recognize)
+        self.btn_detec.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
         
         # --------------------------------------------------------------------------------
 
@@ -84,6 +85,10 @@ class App:
         if ret:
             cv2.imwrite("IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
             
+    def recognize(self):
+        # Get a frame from the video source
+        ret,frame=self.vid.get_frame()
+        print(classify_face(frame))
 
     # create sound effect for button 
     pygame.mixer.init()
@@ -118,7 +123,7 @@ class App:
 
         # Get a frame from the video source
         ret, frame=self.vid.get_frame()
-
+        
         if ret:
             
             # get a rectangle around face when click Detection 
