@@ -14,10 +14,10 @@ def get_encoded_faces():
     """
     encoded = {}
 
-    for dirpath, dnames, fnames in os.walk("./image"):
+    for dirpath, dnames, fnames in os.walk("./faces"):
         for f in fnames:
             if f.endswith(".jpg") or f.endswith(".png"):
-                face = fr.load_image_file("image/" + f)
+                face = fr.load_image_file("faces/" + f)
                 encoding = fr.face_encodings(face)[0]
                 encoded[f.split(".")[0]] = encoding
 
@@ -28,7 +28,7 @@ def unknown_image_encoded(img):
     """
     encode a face given the file name
     """
-    face = fr.load_image_file("image/" + img)
+    face = fr.load_image_file("faces/" + img)
     encoding = fr.face_encodings(face)[0]
 
     return encoding
@@ -59,7 +59,7 @@ def classify_face(img):
         # use the known face with the smallest distance to the new face
         face_distances = face_recognition.face_distance(faces_encoded, face_encoding)
         best_match_index = np.argmin(face_distances)
-        print(matches)
+        # print(matches)
         if matches[best_match_index]:
             name = known_face_names[best_match_index]
 

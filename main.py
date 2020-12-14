@@ -10,6 +10,7 @@ from timer import ElapsedTimeClock
 from face_rec import get_encoded_faces, unknown_image_encoded, classify_face
 
 
+
 class App:
     def __init__(self, window, window_title, video_source=0):
         self.window = window
@@ -83,12 +84,14 @@ class App:
         print(classify_face(frame))
 
         if ret:
-            cv2.imwrite("IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
-            
+            cv2.imwrite("snapshot/IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
+
+    
     def recognize(self):
         # Get a frame from the video source
         ret,frame=self.vid.get_frame()
         print(classify_face(frame))
+
 
     # create sound effect for button 
     pygame.mixer.init()
@@ -147,6 +150,7 @@ class App:
 
     def face_detect(self):
        self.detect = not self.detect
+
 
 def main():
     # Create a window and pass it to the Application object
