@@ -31,14 +31,14 @@ class VideoCapture:
 
         # 2. Video Dimension
         STD_DIMENSIONS =  {
-            '480p': (640, 480),
-            '720p': (1280, 720),
+            '480p': (640,480),
+            # '720p': (900, 500),
             '1080p': (1920, 1080),
             '4k': (3840, 2160),
         }
         res=STD_DIMENSIONS[args.res[0]]
         print(args.name,self.fourcc,res)
-        self.out = cv2.VideoWriter(args.name[0]+'.'+args.type[0],self.fourcc,10,res)
+        self.out = cv2.VideoWriter(args.name[0]+'.'+args.type[0],self.fourcc,14,res)
 
         #set video sourec width and height
         self.vid.set(3,res[0])
@@ -46,6 +46,7 @@ class VideoCapture:
 
         # Get video source width and height
         self.width,self.height=res
+      
 
 
     # To get frames
@@ -55,11 +56,17 @@ class VideoCapture:
             if ret:
                 # Return a boolean success flag and the current frame converted to cv2.COLOR_RGB2BGR
                 return (ret, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+
             else:
                 return (ret, img)
         else:
             return (ret, None)
 
+
+    # def write(self, frame):
+    #     self.out.write(frame)
+    def write(self,frame):
+        self.out.write(frame)       
         
 
     # Release the video source when the object is destroyed

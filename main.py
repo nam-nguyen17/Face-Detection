@@ -6,8 +6,7 @@ import datetime as dt
 import pygame
 from videocapture import VideoCapture
 from timer import ElapsedTimeClock
-
-
+from face_rec import  (get_encoded_faces,unknown_image_encoded,classify_face)
 
 
 class App:
@@ -19,6 +18,7 @@ class App:
         self.face_cascade=cv2.CascadeClassifier('haarcasde/haarcascade_frontalface_default.xml')
         self.detect= False
 
+        
 
         #timer
         self.timer=ElapsedTimeClock(self.window)
@@ -31,10 +31,7 @@ class App:
         self.canvas.pack()
 
         # --------------------------------------------------------------------------------
-        # fm = tk.Frame(master)
-
         #video control buttons
-    
         self.img=tk.PhotoImage(file=r"icon/start.png")
         self.btn_start=tk.Button(self.window, image=self.img,padx=3,pady=2, activebackground='#979797', command=lambda:[self.open_camera(), self.startsound()])
         self.btn_start["border"]="0"
@@ -58,8 +55,12 @@ class App:
         self.btn_quit["border"]="0"
         self.btn_quit.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
 
-        self.btn_detec=tk.Button(self.window, text='Detection', padx=3, pady=2,command=self.face_detect)
+        self.btn_detec=tk.Button(self.window, text='DETECTION', padx=3, pady=2,command=self.face_detect)
         self.btn_detec.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
+
+        self.btn_recog=tk.Button(self.window, text='RECOGNITION',padx=3, pady=2, command=self.recog)
+        self.btn_recog.pack(side=tk.LEFT, fill=tk.BOTH, expand=tk.YES)
+
 
         # After it is called once, the update method will be automatically called every delay milliseconds
         self.delay=10
@@ -70,29 +71,37 @@ class App:
 
     def snapshot(self):
         # Get a frame from the video source
-        ret,frame=self.vid.get_frame()
+        ret, frame=self.vid.get_frame()
+        print(classify_face(frame))
 
         if ret:
-            cv2.imwrite("snapshot/IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
+           cv2.imwrite("snapshot/IMG-"+time.strftime("%d-%m-%Y-%H-%M-%S")+".jpg",cv2.cvtColor(frame,cv2.COLOR_RGB2BGR))
 
+
+    def recog(self):
+        ret, frame=self.vid.get_frame()
+        print(classify_face(frame))
+        
+          
     # create sound effect for button 
     pygame.mixer.init()
     def play_music(self):
         pygame.mixer.music.load("icon/snapshot.mp3")
         pygame.mixer.music.play()
-    pygame.mixer.init()
 
+    pygame.mixer.init()
     def startsound(self):
          pygame.mixer.music.load("icon/startsound.mp3")
          pygame.mixer.music.play()
-    pygame.mixer.init()
 
+    pygame.mixer.init()
     def stopsound(self):
         pygame.mixer.music.load("icon/stopsound.mp3")
         pygame.mixer.music.play()
     
 
     def open_camera(self):
+        
         self.ok = True
         self.timer.start()
         print("camera opened => Recording")
@@ -100,6 +109,7 @@ class App:
 
 
     def close_camera(self):
+        
         self.ok = False
         self.timer.stop()
         print("camera closed => Not Recording")
@@ -109,6 +119,10 @@ class App:
 
         # Get a frame from the video source
         ret, frame=self.vid.get_frame()
+        # if self.ok == True:
+        self.vid.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
+            
+            
 
         if ret:
             
@@ -118,7 +132,7 @@ class App:
                 faces = self.face_cascade.detectMultiScale(gray, 1.1, 4)
             
                 for (x, y, w, h) in faces:
-                    cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)   
+                    cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)    
                     
             self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))    
                 
@@ -132,31 +146,10 @@ class App:
 
 
     def face_detect(self):
-       self.detect= not self.detect
-    # def detection(self):
-    #     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-    #     cap = cv2.VideoCapture(0)
-    #     while True:
-    #         ret, img = cap.read()
-    #         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #         faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-            
-    #         for (x, y, w, h) in faces:
-    #             cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)    
-    #         cv2.imshow('Detect', img)
-    #         k = cv2.waitKey(30) & 0xff
-    #         if k==27:   # esc button in the keyboard
-    #             break
-
-    #         if k==32:   # space button in the keyboard
-    #             return App(tk.Tk(),'Video Recorder')
-            
-    #     cap.release()
-
-
+       self.detect = not self.detect
 
 def main():
     # Create a window and pass it to the Application object
     App(tk.Tk(),'Video Recorder')
 
-main()    
+main()  
