@@ -75,7 +75,7 @@ class App:
         # After it is called once, the update method will be automatically called every delay milliseconds
         self.delay=10
         self.update()
-        self.window.resizable(0, 0)
+        # self.window.resizable(0, 0)
         self.window.mainloop()
 
 
@@ -170,6 +170,6 @@ class App:
 
 def main():
     # Create a window and pass it to the Application object
-    App(tk.Tk(),'Video Recorder')
+    App(tk.Tk(),'Face Detection')
 
 main()  
