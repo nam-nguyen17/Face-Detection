@@ -154,7 +154,7 @@ class App:
 
 
                  
-            self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))    
+            # self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
             self.canvas.create_image(0,0, image=self.photo, anchor=tk.NW)
         # ---------------------------------------------------------------------------------
 
@@ -162,7 +162,7 @@ class App:
 
 
     def quit(self):
-        self.window.destroy()
+        self.window.quit()
 
     def face_detect(self):
        self.detect = not self.detect
