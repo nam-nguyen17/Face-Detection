@@ -72,9 +72,6 @@ def classify_face(img):
                     name = known_face_names[best_match_index]
 
         face_names.append(name)
-        
-        
-
 
         # for (top, right, bottom, left), name in zip(face_locations, face_names):
         #     # Draw a box around the face
@@ -85,13 +82,5 @@ def classify_face(img):
         #     font = cv2.FONT_HERSHEY_DUPLEX
         #     cv2.putText(img, name, (left -20, bottom + 15), font, 1.0, (255, 255, 255), 2)
 
-
-    # Display the resulting image
-    # while True:
-
-    #     cv2.imshow('Video', img)
-    #     if cv2.waitKey(1) & 0xFF == ord('q'):
     return face_names 
 
-
-# print(classify_face('test.jpg'))

@@ -49,7 +49,7 @@ class VideoCapture:
 
 
     # To get frames
-    def get_frame(self):
+    def get_frame(self, ret=None):
         if self.vid.isOpened():
             ret, img = self.vid.read()
             if ret:
