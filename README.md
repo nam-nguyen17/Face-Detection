@@ -8,4 +8,5 @@ Because it used for academic subject so it has a lot of restrictment about timin
 # Usage
 **install all modules in _requirement_**
 > git clone https://github.com/nam-nguyen17/Face-Detection-basic.git
+
 > run file **__init__.py**
