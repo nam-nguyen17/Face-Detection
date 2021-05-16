@@ -6,7 +6,7 @@ You can use it to detect face as well as know who he/she is. Also, It uses for c
 Because it used for academic subject so it has a lot of restrictment about timing and accuracy.
 
 # Usage
-**install all modules in _requirement_**
+**install all modules in _requirement.txt_**
 > git clone https://github.com/nam-nguyen17/Face-Detection-basic.git
 
 > run file **___init___.py**
